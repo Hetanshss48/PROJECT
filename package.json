@@ -1,0 +1,24 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hetanshss48/PROJECT.git"
+  },
+  "author": "Hetansh Shah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hetanshss48/PROJECT/issues"
+  },
+  "homepage": "https://github.com/Hetanshss48/PROJECT#readme",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+
+}
