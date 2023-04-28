@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('../models/user')
 const router = express.Router()
 
-router.get('/test', async (req, res) => {
+router.get('/getAllUsers', async (req, res) => {
   try {
     const users = await User.getAllUsers();
     res.send(users); 

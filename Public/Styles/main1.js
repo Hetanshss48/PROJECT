@@ -49,28 +49,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 */
+let loginForm = document.getElementById("login-form");
+if(loginForm) loginForm.addEventListener("submit", login);
+function login(e) {
+  e.preventDefault();
 
-//login form
-document.addEventListener("DOMContentLoaded", () => {
-  
-  const loginForm = document.getElementById("login-form");
-  if(loginForm){
-    loginForm.addEventListener("submit", (event) => {
-      
-      event.preventDefault();
+  let userName = document.getElementById("email-input").value;
+  let password = document.getElementById("password-input").value;
 
-      
-      const emailInput = document.getElementById("email-input");
-      const passwordInput = document.getElementById("password-input");
+  let user = new User(userName, password);
+  /*
+    {
+      userName: "cathy123",
+      password: "icecream"
+    }
+  */
+  fetch("http://localhost:3000/users/getAllUsers")
+  .then(response => {
+    return response.json();
+  })
+  .then((data) => console.log(data))
+  .catch(err => {
+    console.log(err.message);
+  })
+}
 
-      
-      const loginUser = new User("", emailInput.value, passwordInput.value);
-
-      
-      console.log(loginUser);
-    });
-  }  
-}); 
 //post form
 document.addEventListener('DOMContentLoaded', () => {
  
