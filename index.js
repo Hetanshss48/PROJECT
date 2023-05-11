@@ -15,8 +15,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(express.static(__dirname + "/public"))
-app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/public/bmi.html")))
+// app.use(express.static(__dirname + "/public"))
+// app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/public/register.html")))
 
 app.use('/users', userRoutes)
 // app.use('/posts', postRoutes)
