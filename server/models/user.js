@@ -19,10 +19,10 @@ async function getAllUsers() {
   return await con.query(sql);
 }
 
-async function userExists(userName) {
+async function userExists(User) {
   let sql = `
     SELECT * FROM users
-    WHERE userName = "${userName}"
+    WHERE userName = "${User.userName}"
   `
   return await con.query(sql);
 }
