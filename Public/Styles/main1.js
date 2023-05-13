@@ -1,25 +1,28 @@
-let getBtn = document.getElementById("getUsers");
-if (getBtn) getBtn.addEventListener("click", getAllUsers);
-
-
 class User {
-  constructor(name,password) {
-    this.name = name;
-   
+  constructor( userName, password) {
+    this.userName = userName;
     this.password = password;
   }
-  get name(){
-  return this.name;
+  get UserName() {
+    return this.userName;
   }
-  get password(){
-  return this.password;
+  get Password() {
+    return this.Password;
   }
-  set name(name){
-    this.Name = name;
+  set UserName(userName) {
+    this.userName = userName;
   }
-  set password(password){
-    this.password = password;
+  set Password(pwd) {
+    this.password = pwd;
   }
+}
+let getResults = document.getElementById("getmyuser");
+if (getResults) getResults.addEventListener("click", getAllUsers);
+
+function getAllUsers() {
+  fetch("http://localhost:3000/users/")
+    .then((response) => response.json())
+    .then((data) => console.log(data));
 }
 function setCurrentUser(user) {
   localStorage.setItem("user", JSON.stringify(user));
@@ -31,15 +34,15 @@ function logout() {
   localStorage.removeItem("user");
   window.location.href = "login.html";
 }
+
 let registerform = document.getElementById("registration-form");
 if (registerform) {
   registerform.addEventListener("submit", (event) => {
     event.preventDefault();
-    const name = document.getElementById("name-input");
+    const userName = document.getElementById("userName").value;
+    const password = document.getElementById("password").value;
 
-    const password = document.getElementById("password-input");
-
-    const registerUser = new User(name, password);
+    const registerUser = new User(userName, password);
     console.log(registerUser);
     fetchData("/users/register", registerUser, "POST")
       .then((data) => {
@@ -48,64 +51,41 @@ if (registerform) {
       })
       .catch((err) => {
         document.querySelector("#registration-form p.error").innerHTML = err.message;
-        document.getElementById("password-input").value = "";
+        // document.getElementById("password").value = "";
       });
   });
 }
-/*
-document.addEventListener('DOMContentLoaded', () => {
-  
-  const registrationForm = document.getElementById('registration-form');
-  if(registrationForm){
-   registrationForm.addEventListener('submit', (event) => {
-    
+
+let loginform = document.getElementById("login-form");
+if (loginform) {
+  loginform.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    
-    const nameInput = document.getElementById('name-input');
-    const emailInput = document.getElementById('email-input');
-    const passwordInput = document.getElementById('password-input');
+    const userName = document.getElementById("userName").value;
+    const password = document.getElementById("Password").value;
 
-    
-    const registerUser = new User(nameInput.value, emailInput.value, passwordInput.value);
-
-    // Print the User object to check if everything was done correctly
-    console.log(registerUser);
-   });
-  }
-});
-*/
-let loginForm = document.getElementById("login-form");
-if (loginForm) loginForm.addEventListener("submit", login);
-function login(e) {
-  e.preventDefault();
-
-  let userName = document.getElementById("Ussername").value;
-  let password = document.getElementById("password-input").value;
-
-  let user = new User(userName, password);
-  const LoginUser = new User( userName, password);
-  console.log(LoginUser);
-  fetchData("/users/login", LoginUser, "POST")
-    .then((data) => {
-      setCurrentUser(data);
-      window.location.href = "post.html";
-    })
-    .catch((err) => {
-      document.querySelector("#loginform p.error").innerHTML = err.message;
-      document.getElementById("userName").value = "";
-      document.getElementById("pswd").value = "";
-    });
+    const LoginUser = new User("", "", userName, password);
+    console.log(LoginUser);
+    fetchData("/users/login", LoginUser, "POST")
+      .then((data) => {
+        setCurrentUser(data);
+        window.location.href = "post.html";
+      })
+      .catch((err) => {
+        document.querySelector("#login-form p.error").innerHTML = err.message;
+        document.getElementById("userName").value = "";
+        document.getElementById("Password").value = "";
+      });
+  });
 }
 
-//post form
 let postform = document.getElementById("post-form");
 if (postform) {
   postform.addEventListener("submit", (event) => {
     event.preventDefault();
     let currentUser = getCurrentUser();
     const post = {
-      postcontent: document.getElementById("post-input").value,
+      postcontent: document.getElementById("post").value,
       userID: currentUser.userID,
     };
     fetchData("/posts/add", post, "POST")

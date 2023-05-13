@@ -19,18 +19,18 @@ async function getAllUsers() {
   return await con.query(sql);
 }
 
-async function userExists(User) {
+async function userExists(username) {
   let sql = `
     SELECT * FROM users
-    WHERE userName = "${User.userName}"
+    WHERE userName = "${username}"
   `
   return await con.query(sql);
 }
 
 async function login(user) {
-  let cUser = await userExists(user.userName);
+  let cUser = await userExists(user.username);
   if(!cUser[0]) throw Error("Username does not exist!");
-  if(cUser[0].password != user.password) throw Error("Password is incorrect!");
+  if(cUser[0].Password != user.Password) throw Error("Password is incorrect!");
 
   return cUser[0];
 }
@@ -43,7 +43,7 @@ async function register(user) {
   // create new user
   let sql = `
     INSERT INTO users(userName, password)
-    VALUES ("${user.name}", "${user.password}");
+    VALUES ("${user.userName}", "${user.password}");
   `
   await con.query(sql)
 
