@@ -15,7 +15,7 @@ class User {
   return this.password;
   }
   set name(name){
-    this.name = name;
+    this.Name = name;
   }
   set password(password){
     this.password = password;
