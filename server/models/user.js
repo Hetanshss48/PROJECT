@@ -43,7 +43,7 @@ async function register(user) {
   // create new user
   let sql = `
     INSERT INTO users(userName, password)
-    VALUES ("${user.userName}", "${user.password}");
+    VALUES ("${user.name}", "${user.password}");
   `
   await con.query(sql)
 

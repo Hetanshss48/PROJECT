@@ -1,16 +1,23 @@
 let getBtn = document.getElementById("getUsers");
 if (getBtn) getBtn.addEventListener("click", getAllUsers);
 
-function getAllUsers() {
-  fetch("http://localhost:3000/users/")
-    .then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err));
-}
+
 class User {
-  constructor(name, email, password) {
+  constructor(name,password) {
     this.name = name;
-    this.email = email;
+   
+    this.password = password;
+  }
+  get name(){
+  return this.name;
+  }
+  get password(){
+  return this.password;
+  }
+  set name(name){
+    this.name = name;
+  }
+  set password(password){
     this.password = password;
   }
 }
@@ -28,11 +35,11 @@ let registerform = document.getElementById("registration-form");
 if (registerform) {
   registerform.addEventListener("submit", (event) => {
     event.preventDefault();
-    const firstnameInput = document.getElementById("name-input");
+    const name = document.getElementById("name-input");
 
-    const passwordInput = document.getElementById("password-input");
+    const password = document.getElementById("password-input");
 
-    const registerUser = new User(firstnameInput.value, passwordInput.value);
+    const registerUser = new User(name, password);
     console.log(registerUser);
     fetchData("/users/register", registerUser, "POST")
       .then((data) => {
@@ -40,8 +47,8 @@ if (registerform) {
         window.location.href = "post.html";
       })
       .catch((err) => {
-        document.querySelector("#registerform p.error").innerHTML = err.message;
-        document.getElementById("pwd").value = "";
+        document.querySelector("#registration-form p.error").innerHTML = err.message;
+        document.getElementById("password-input").value = "";
       });
   });
 }
@@ -77,7 +84,7 @@ function login(e) {
   let password = document.getElementById("password-input").value;
 
   let user = new User(userName, password);
-  const LoginUser = new User("", "", userName, password);
+  const LoginUser = new User( userName, password);
   console.log(LoginUser);
   fetchData("/users/login", LoginUser, "POST")
     .then((data) => {
